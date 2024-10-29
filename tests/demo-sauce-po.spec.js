@@ -2,35 +2,27 @@ const { test, expect } = require('@playwright/test');
 import { loginPage } from "./page-object/loginPage"
 import { Dashboard } from "./page-object/Dashboard"
 import { Cart } from "./page-object/Cart"
+const { testCostum } = require('./base/base-test');
 
-test.describe('Saucedemo Page-Object Test', () => {
-    test('Successful Login', async ({ page }) => {
-
-        const loginpage = new loginPage(page)
-        const dashboard = new Dashboard(page)
+testCostum.describe('Saucedemo Page-Object Test', () => {
+    testCostum('Successful Login', async ({ loginpage, dashboard }) => {
         await loginpage.navigateLoginURL()
-        await loginpage.inputUsernamePassword("standard_user", "secret_sauce")
+        await expect(loginpage.page).toHaveScreenshot('LoginPage.png')
+        await loginpage.inputUsernamePassword(process.env.STANDART_USER, process.env.PASSWORD)
         await loginpage.clickLoginButton()
-
+        
         await dashboard.validateLogin()
-
+        
         });
         
-        test('Add to Cart Test', async ({ page }) => {
-        const loginpage = new loginPage(page)
-        const dashboard = new Dashboard(page)
-        const cart = new Cart(page)
+        testCostum('Add to Cart Test', async ({ loginpage, dashboard, cart }) => {
+        
         await loginpage.navigateLoginURL()
-        await loginpage.inputUsernamePassword("standard_user", "secret_sauce")
+        await loginpage.inputUsernamePassword(process.env.STANDART_USER, process.env.PASSWORD)
         await loginpage.clickLoginButton()
         
-        await dashboard.itemAddtoCart1()
-        await dashboard.itemAddtoCart2()
-        await dashboard.itemAddtoCart3()
-        await dashboard.itemAddtoCart4()
-        await dashboard.itemAddtoCart5()
-        await dashboard.itemAddtoCart6()
-        await dashboard.cartButton()
+        await dashboard.AddAllItem()
+        
 
         await cart.validateCart()
         });

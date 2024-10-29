@@ -12,6 +12,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') });
  */
 module.exports = defineConfig({
   testDir: './tests',
+  snapshotPathTemplate: 'tests/screenshots/{arg}{ext}',
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

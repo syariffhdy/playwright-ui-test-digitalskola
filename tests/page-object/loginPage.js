@@ -12,6 +12,7 @@ export class loginPage{
 
     async navigateLoginURL(){
         await this.page.goto(process.env.LOGINURL)
+        
     }
 
    async inputUsernamePassword(username, password){

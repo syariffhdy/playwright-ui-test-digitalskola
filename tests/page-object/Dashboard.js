@@ -5,21 +5,22 @@ export class Dashboard{
     constructor (page){
         this.page = page;
          
-        this.titlePage = page.getByText('Swag Labs', { exact: true });
-        this.buttonMenu = page.getByRole('button', { name: 'Open Menu', exact: true });
+        this.titlePage = page.getByText(process.env.TITLE, { exact: true });
+        this.buttonMenu = page.getByRole('button', { name: process.env.BUTTONMENU, exact: true });
 
-        this.itemclick1 = page.locator('[id="add-to-cart-sauce-labs-backpack"]')
-        this.itemclick2 = page.locator('[id="add-to-cart-sauce-labs-bike-light"]')
-        this.itemclick3 = page.locator('[id="add-to-cart-sauce-labs-bolt-t-shirt"]')
-        this.itemclick4 = page.locator('[id="add-to-cart-sauce-labs-fleece-jacket"]')
-        this.itemclick5 = page.locator('[id="add-to-cart-sauce-labs-onesie"]')
-        this.itemclick6 = page.locator('[id="add-to-cart-test.allthethings()-t-shirt-(red)"]')
+        this.itemclick1 = page.locator(process.env.IDITEM1)
+        this.itemclick2 = page.locator(process.env.IDITEM2)
+        this.itemclick3 = page.locator(process.env.IDITEM3)
+        this.itemclick4 = page.locator(process.env.IDITEM4)
+        this.itemclick5 = page.locator(process.env.IDITEM5)
+        this.itemclick6 = page.locator(process.env.IDITEM6)
 
-        this.buttonCart = page.locator('[id="shopping_cart_container"]')
+        this.buttonCart = page.locator(process.env.BUTTONCART)
     }
 
     async validateLogin(){
-        await expect(this.page).toHaveURL('https://www.saucedemo.com/inventory.html')
+        await expect(this.page).toHaveURL(process.env.DASHBOARDURL)
+        await expect(this.page).toHaveScreenshot('DashboardPage.png')
         await expect(this.titlePage).toBeVisible()
         await expect(this.buttonMenu).toBeVisible()
     }
@@ -44,6 +45,15 @@ export class Dashboard{
     }
     async cartButton(){
       await this.buttonCart.click()
+    }
+    async AddAllItem(){
+      await this.itemAddtoCart1()
+      await this.itemAddtoCart2()
+      await this.itemAddtoCart3()
+      await this.itemAddtoCart4()
+      await this.itemAddtoCart5()
+      await this.itemAddtoCart6()
+      await this.cartButton()
     }
 }
 module.exports = { Dashboard }
